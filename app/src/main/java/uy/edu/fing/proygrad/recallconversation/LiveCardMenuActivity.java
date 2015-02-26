@@ -10,35 +10,41 @@ import android.view.MenuItem;
  */
 public class LiveCardMenuActivity extends Activity {
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        // Open the options menu right away.
-        openOptionsMenu();
-    }
+  @Override
+  public void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    // Open the options menu right away.
+    openOptionsMenu();
+  }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.live_card, menu);
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.live_card, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_record:
+        RecallConversationApplication.bus.post(RecordAlertEvent.newInstance());
         return true;
+      case R.id.action_play:
+        RecallConversationApplication.bus.post(PlayAlertEvent.newInstance());
+        return true;
+      case R.id.action_stop:
+        // Stop the service which will unpublish the live card.
+        stopService(new Intent(this, LiveCardService.class));
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
     }
+  }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_stop:
-                // Stop the service which will unpublish the live card.
-                stopService(new Intent(this, LiveCardService.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onOptionsMenuClosed(Menu menu) {
-        super.onOptionsMenuClosed(menu);
-        // Nothing else to do, finish the Activity.
-        finish();
-    }
+  @Override
+  public void onOptionsMenuClosed(Menu menu) {
+    super.onOptionsMenuClosed(menu);
+    // Nothing else to do, finish the Activity.
+    finish();
+  }
 }

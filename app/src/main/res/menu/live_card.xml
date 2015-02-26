@@ -1,6 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_record"
+        android:title="@string/action_record"
+        android:icon="@drawable/ic_glass_logo"/>
+
+    <item
+        android:id="@+id/action_play"
+        android:title="@string/action_play"
+        android:icon="@drawable/ic_beamed_note_50"/>
+
+    <item
         android:id="@+id/action_stop"
         android:title="@string/action_stop"
         android:icon="@drawable/ic_stop"/>
+
 </menu>
